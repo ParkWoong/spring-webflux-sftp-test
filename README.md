@@ -23,7 +23,7 @@ src/main/java/io/github/parkwoong/sftp/sftp/util/SftpPath.java
 src/main/java/io/github/parkwoong/sftp/sftp/util/StringUtils.java
 src/main/java/io/github/parkwoong/sftp/webflux/config/WebfluxConfig.java
 src/main/java/io/github/parkwoong/sftp/webflux/properties/WebfluxProperties.java
-src/main/resources/application.properties
+src/main/resources/application.yml
 src/test/java/io/github/parkwoong/sftp/SftpPathTest.java
 ```
 
@@ -40,6 +40,10 @@ mvn spring-boot:run
 ```
 
 Use JDK 8 and Maven 3.6.3+. Set `SFTP_HOST`, `SFTP_USER`, `SFTP_PRIVATE_KEY_PATH`, `SFTP_KNOWN_HOSTS_PATH`, and `SFTP_REMOTE_DIR` in your environment before making a transfer. Do not put key files in this repository. `mvn clean verify` checks filename confinement without an SFTP server. `mvn spring-boot:run` starts the local API on 127.0.0.1:8080. A live upload/download requires your own test SFTP server and valid credentials.
+
+#### Postman API
+
+Set the SFTP environment variables listed above and prepare a test SFTP server with the remote directory. Send POST http://localhost:8080/sftp/upload with Content-Type: application/json and body {"name":"hello.txt","payload":"aGVsbG8="}. Expected on success: HTTP 200, {"result":true,"location":"/upload/hello.txt"} when SFTP_REMOTE_DIR is /upload. Then POST /sftp/download with body {"name":"hello.txt"} returns HTTP 200, {"result":true,"payload":"aGVsbG8="}.
 
 ## KR
 
@@ -62,7 +66,7 @@ src/main/java/io/github/parkwoong/sftp/sftp/util/SftpPath.java
 src/main/java/io/github/parkwoong/sftp/sftp/util/StringUtils.java
 src/main/java/io/github/parkwoong/sftp/webflux/config/WebfluxConfig.java
 src/main/java/io/github/parkwoong/sftp/webflux/properties/WebfluxProperties.java
-src/main/resources/application.properties
+src/main/resources/application.yml
 src/test/java/io/github/parkwoong/sftp/SftpPathTest.java
 ```
 
@@ -79,3 +83,7 @@ mvn spring-boot:run
 ```
 
 JDK 8과 Maven 3.6.3 이상을 사용합니다. 실제 전송 전 `SFTP_HOST`, `SFTP_USER`, `SFTP_PRIVATE_KEY_PATH`, `SFTP_KNOWN_HOSTS_PATH`, `SFTP_REMOTE_DIR` 환경변수를 설정하세요. 키 파일은 저장소에 넣지 않습니다. `mvn clean verify`는 SFTP 서버 없이 파일명 검증을 테스트합니다. `mvn spring-boot:run`은 로컬 API를 127.0.0.1:8080에서 실행합니다. 실제 업로드·다운로드는 별도 테스트 SFTP 서버와 유효한 인증 정보가 필요합니다.
+
+#### Postman API
+
+위 SFTP 환경 변수를 설정하고 원격 디렉터리가 있는 테스트 SFTP 서버를 준비하세요. Content-Type: application/json으로 POST http://localhost:8080/sftp/upload에 {"name":"hello.txt","payload":"aGVsbG8="}를 보내세요. SFTP_REMOTE_DIR이 /upload일 때 성공 결과는 HTTP 200, {"result":true,"location":"/upload/hello.txt"}입니다. 이어서 POST /sftp/download에 {"name":"hello.txt"}를 보내면 HTTP 200, {"result":true,"payload":"aGVsbG8="}가 반환됩니다.

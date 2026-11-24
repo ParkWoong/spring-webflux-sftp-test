@@ -1,0 +1,16 @@
+server:
+  address: 127.0.0.1
+  port: 8080
+api:
+  path:
+    upload: /sftp/upload
+    download: /sftp/download
+webflux:
+  max-in-memory-size: 1048576
+sftp:
+  server-address: ${SFTP_HOST:localhost}
+  server-username: ${SFTP_USER:sample}
+  server-port: ${SFTP_PORT:22}
+  default-path: ${SFTP_REMOTE_DIR:/upload}
+  private-key-path: ${SFTP_PRIVATE_KEY_PATH:}
+  known-hosts-path: ${SFTP_KNOWN_HOSTS_PATH:}
